@@ -1,0 +1,162 @@
+DB(함수2, Join)_1_내장함수(집계함수)
+
+@집계 함수
+- 결과를 만족하는 전체 행을 하나 이상의 컬럼을 기준으로 그룹화하여 그룹별로 결과를 반환하는함수
+- 통계 결과를 제공
+
+@집계 함수의 종류
+- NULL값을 집계하지 않음에 주의 >>> COUNT(*) 제외
+- COUNT( [DISTINCT | ALL] 컬럼명 [, 컬럼명,...])
+- SUM( [DISTINCT | ALL] 컬럼명)
+- AVG( [DISTINCT | ALL] 컬럼명)
+- MAX ( [DISTINCT | ALL] 컬럼명)
+- MIN ( [DISTINCT | ALL] 컬럼명)
+
+
+@GROUP BY절
+- 결과 집합의 하위 데이터 그룹을 만듦
+- GROUP BY절에 기술한 컬럼이나 표현식을 기준으로 결과 집합 전체 행을 그룹별로 나눔
+- 각 그룹별로 SELECT절에 기술한 집계 함수가 적용
+- SELECT절의 모든 요소는 GROUP BY절의 표현식, 집계 함수를 포함하는 표현식 또는 상수만 가능
+- SELECT절에 기술한 컬럼 중, 집계 함수에 사용되지 않은 컬럼은 GROUP BY절에 반드시 기술되오야 함
+- WHERE절에는 집계 함수를 사용할 수 없음
+	-Grouping 이전에 WHERE절을 사용하여 그룹 대상 집합을 먼저 선택
+
+@다중 컬럼을 이용한 그룹화
+- 하나 이상의 컬럼을 사용하여 그룹화
+- 기준 1로 그룹을 나누고 다음 기준을 적용하여 기준 1로 형성된 그룹별로 다시 서브 그룹을 나눔
+
+@HAVING절
+- GROUP BY 절에 의해 생성된 그룹을 대상으로 조건을 적용하여 그룹을 필터링 하기 위해 사용
+- 집계 관련 조건절
+
+@WITH ROLLUP
+- 그룹 항목 총계나 각 그룹별 소계가 필요한 경우 사용
+
+@GROUPING함수
+- 조회되는 컬럼의 NULL값이 실제 NULL값인지 ROLLUP에 의해 생성된 NULL값인지 판단
+- 실제 NULL값 또는 NULL값이 아닌 값
+	0 리턴
+- ROLLUP에 의한 NULL값
+	1 리턴
+
+
+@피봇 테이블
+- 데이터를 행, 열, 값으로 재구성하여 정보를 쉽게 파악할 수 있음
+- 행 및 열 기준으로 데이터 그룹화
+	특정 기준에 따라 데이터를 그룹화하여 분석 가능
+- 값 요약
+	데이터를 합계, 평균, 최대값, 최소값 등으로 요약하여 결과 조회 가능
+
+@JOIN
+- 두 테이블 연결 필요 >>> 조인으로 해결
+- 하나의 SQL 명령문으로 여러 테이블에 저장된 데이터를 한번에 조회할 수 있는 기능
+- 두 개 이상의 테이블을 '결합'한다는 의미
+- 주로 Primary-KEY와 Foregin-Key의 관계를 가진 컬럼을 소유하고 있는 테이블을 통한 검색 시 사용
+- N개의 테이블 조인 시 N-1개 이상의 조인 조건 필요
+
+@조인의 종류 -1
+- 조건에 따른 구분
+	-EQUI JOIN : 조인 조건의 컬럼을 '='비교를 통해 같은 값을 가지는 행을 연결하여 결과를 생성하는 조인 방법
+	-NON-EQUI JOIN : <. BETWEEN a AND b 와 같이 '='조건이 아닌 연산자를 사용하여 조인하는 방법
+
+-조인 처리 결과에 따른 구분
+	-INNER JOIN : 조인 조건에 부합하는 행들만 연결하여 결과를 생성하는 조인 방법
+	-OUTER JOIN : 조인 조건에 부합하지 않는 기분 테이블의 행들도 모두 포함하여 결과를 생성하는 조인 방법
+
+@조인의 종류 -2
+- 조인 조건 생략 시 구분
+	-NATURAL JOIN : 대상 테이블의 모든 공통 컬럼을 조인 조건 컬럼으로 사용하여 연결하는 조인 방법
+	-CROSS JOIN : 대상 테이블의 모든 행들을 가능한 조합으로 연결하는 조인 방법
+	(TABLE1 8개 행 & TABLE2 4개 행 >>> 32개의 행 결과 생성)
+- 그 밖의 조인
+	-SELF JOIN : 계층형의 성질을 갖는 데이터를 갖는 테이블에서의 상/하 관계의 행을 연결하여 결과를 생성하는 조인 방법
+
+@EQUI JOIN
+- 가장 많이 사용하는 조인 조건의 형태
+- 조인 조건의 컬럼을 '='(equal) 비교를 통해 같은 값을 가지는 행을 연결하여 결과를 생성하는 조인 방법
+
+SELECT ...
+FROM table1
+JOIN   table2 USING(공통컬럼1[, 공통컬럼2, ...]) >>> Using절 : 테이블명, 테이블 별칭 사용 불가 !
+
+SELECT ...
+FROM table1
+JOIN   table2 ON(table1.col = table2.col [AND | OR 조건식2 ...])
+
+SELECT ...
+FROM table1, table2
+WHERE table1.col = table2.col
+
+@NON-EQUI JOIN
+- 조인 조건의 컬럼을 '='(equal) 비교가 아닌 다른 연산자를 통해 행을 연결하여 결과를 생성하는 조인 방법
+- JOIN ~ USING 사용 불가
+
+@ INNER JOIN 
+- 조인 조건에 부합하는 행에 대해서만 연결하는 조인 방식
+
+SELECT ...
+FROM table1
+[INNER]JOIN table2 USING(공통컬럼1, [, 공통컬럼2, ...])
+
+SELECT ..
+FROM table1
+[INNER] JOIN table2 ON(table1.col = table2. col [AND | OR 조건식 2 ...])
+
+SELECT ...
+FROM table, table2
+WHERE table1.col = table2.col
+
+@ OUTER JOIN
+- 조인 조건에 부합하지 않는 행도 모두 포함하는 조인 방식
+- 전체 행을 가져오고 싶은 테이블을 기준으로 함
+	- LEFT OUTER JOIN : 기준 테이블을 먼저 기술
+	- RIGHT OUTER JOIN : 기준 테이블을 나중에 기술
+ 	- FULL OUTER JOIN : 양쪽 테이블 모두 기준 테이블
+SELECT ...
+FROM table1
+LEFT | RIGHT [OUTER] JOIN table2 USING(공통컬럼1, [, 공통컬럼2, ...])
+
+SELECT
+FROM
+LEFT | RIGHT [OUTER] JOIN table2 ON(table1.col = table2.col [AND | OR 조건식2 ...])
+
+@ NATURAL JOIN
+- 조인 조건을 명시하지 않음
+- 조인 대상 테이블의 모든 공통 컬럼(이름이 같은 컬럼)을 이용하여 자연스럽게 조인
+- 주의 사항
+ 	두 테이블에서 의미가 서로 다른 컬럼의 이름이 같을 경우 의도하지 않은 조인의 결과가 생성되므로 유의
+	공통 컬럼이 없을 경우 CROSS JOIN과 결과 같음
+
+SELECT ...
+FROM table1
+NATURAL JOIN table2
+
+@ CROSS JOIN
+- 조인 조건을 명시하지 않음
+- 두 조인 테이블을 조인할 조건이 없으므로 가능한 모든 연결을 다 시도하여 조인 결과 생성
+- 두 테이블의 레코드가 많을 경우 너무 낳은 결과 생성에 유의
+	테이블1의 행개수 * 테이블2의 행 개수의 결과만큼 생성
+SELECT ...
+FROM table1
+CROSS JOIN table2
+
+SELECT ...
+FROM table1, table2
+
+SELF JOIN
+- 주로 계층형 테이블에서 나타나는 조인의 형태
+- 하나의 테이블을 마치 두 개의 테이블 처럼 조인
+- 상위 레코드와 하위 레코드를 연결하는 조인
+- ***테이블 별칭 필수***
+
+SELECT ...
+FROM table1 a
+JOIN table2 b on (a.col = b.col)
+
+SELECT ...
+FROM table1 a, table2 b
+WHERE a.col = b.col
+
+
+
