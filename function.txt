@@ -1,0 +1,17 @@
+CURDATE()
+DATEDIFF(a , b)
+YEAR(a)
+DATE_ADD(a, b)
+WEEKDAY('2020-05-05') >>> 0~4 평일, 5~6 주말
+
+SELECT
+	CASE
+		WHEN THEN
+		ELSE THEN
+	END AS
+
+IS NOT NULL
+
+"윤*욱" >>> * 의미
+CONVERT(값, 변환할 타입 [, 스타일]) >>> 형식 지정이 필요할 때 유용
+CAST('132' AS INT) >>>단순 타입 변환시 직관적이다. 
