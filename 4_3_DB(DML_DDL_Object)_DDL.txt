@@ -1,0 +1,93 @@
+4_3_DB(DML_DDL_Object)_DDL.txt
+
+@@@DDL@@@
+
+@Data Definition Language
+- 데이터 정의어
+- 테이블이나 인덱스 ,뷰 등과 같은 데이터베이스 객체들을 생성, 상제, 변경하기 위한 명령어
+- 명령어
+	1. CREATE 데이터베이스객체 ~ / 데이터베이스 객체 생성
+	2. ALTER 데이터베이스객체 ~ / 데이터베이스 객체 수정
+	3. DROP 데이터베이스객체 ~ / 대이터베이스 객체 삭제
+
+@DATABASE 생성
+- 테이블이나 인덱스, 뷰 등과 같은 데이터베이스 객체들을 생성, 삭제, 변경하기 위한 명령어
+	CREATE DATABASE 데이터베이스명
+	[DEFAULT CHARACTER SET characterset명] [COLLATE collation값];
+
+@ DATABASE 변경
+	ALTER DATABASE 데이터베이스명
+	[DEFAULT CHARACTER SET characterset명] [COLLATE collation값];
+
+@ DATABASE 삭제
+	DROP DATABASE 데이터베이스명
+
+@ DATABASE 사용
+	USE 데이터베이스명
+
+@TABLE 생성 -1
+- 테이블을 구성하는 컬럼의 데이터 타입과 무결성 제약조건을 정의함으로써 테이블의 구조를 정의
+- 형식
+	CREATE TABLE 테이블명 (
+	 	컬러명 데이터타입 [DEFAULT 기본값][컬럼 제약조건]
+		[, ...]
+		[, 테이블 제약조건, ...] )
+-테이블 이름 정의 방법
+	1. 문자로 시작, 30자 이내
+	2. 문자, 숫자, 특수문자 사용 가능
+	3. 동일 사용자가 소유한 다른 객체의 이름과 중복 불가
+	4. 서로 다른 테이블에서 동일한 데이터를 저장하는 컬럼 이름은 가능하면 같은 이름을 사용
+
+@제약 조건
+- 데이터의 물경성을 지켜주는 중요한 역할
+- 테이블에 행이 입력, 갱신, 삭제 될 때마다 지정된 제약 조건을 반드시 만족해야 함
+- 제약조건을 활성화, 비활성화 할 수 있는 융통성을 지님
+- 테이블 생성 시나 생성 후 ALTER문으로 제약조건 추가 가능
+- 컬럼 레벨 또는 테이블 레벨 제약조건 설정 가능
+- 제약 조건 종류
+	1. NOT NULL : 컬럼 값으로 NULL을 허용하지 않음, 값이 반드시 필요함(컬럼레벨만 가능)
+	2. UNIQUE : 컬럼의 중복 값을 허용하지 않음
+	3. PRIMARY KEY : 컬럼은 NOT NULL이어야 하며 UNIQUE해야 함
+	4. FOREIGN KEY : 참조하는 부모 테이블의 컬럼의 값만 허용
+	5. CHECL : 컬럼 값으로 가능한 값 리스트나 범위에 해당하는 값만 허용
+	
+
+@TABLE 생성 -2
+- 형식
+	CREATE TABLE 테이블명 LIKE 기존테이블명
+- 기존 테이블을 토대로 하여 테이블의 구조를 복사한 새 테이블 생성
+- 외래키 제약조건은 복사되지 않음
+
+@TABLE 생성 with 서브 쿼리
+- 형식
+	CREATE TABLE 테이블명 [ ( 컬럼명 데이터타입 [ DEFAULT 기본값] [, ...]}]
+	AS Sub Query
+- 서브 쿼리 결과의 구조대로 테이블 생성 및 레코드 삽입이 동시에 이루어짐
+- CREATE TABLE 명령문에서 지정한 컬럼 수와 데이터 타입과 반드시 일치해야 함
+- 컬럼 이름을 명시하지 않을 경우 서브 쿼리 컬럼 이름(별칭)과 동일하게 만들어짐
+- 제약조건은 NOT NULL, DEFAULT 복사됨
+	기본키, 외래키, 고유키, 체크와 같은 무결성 제약조건은 사용자의 재정의 필요
+- 자동증가키는 복사되지 않음
+
+@TABLE 삭제
+- 구조와 데이터 모두 삭제
+	DROP TABLE 테이블명;
+
+- 데이터만 삭제
+	TRUNCATE [TABLE] 테이블명;
+
+@TABLE 변경
+- 컬럼 추가
+	ALTER TABLE 테이블명 ADD [COLUMN] 컬럼명 데이터타입 [제약조건] [FIRST | AFTER 컬럼명] ;
+- 컬럼 변경
+	ALTER TABLE 테이블명 MODIFY [COLUMN] 컬럼명 데이터타입 [제약조건] [FIRST | AFTER 컬럼명] ;
+	ALTER TABLE 테이블명 CHANGE [COLUMN] 컬럼명 새컬럼명 데이터타입 [제약조건] [FIRST | AFTER 컬럼명] ;
+- 컬럼 이름 변경
+	ALTER TABLE 테이블명 RENAME COLUMN 컬럼명 TO새컬럼명;
+- 컬럼 삭제
+	ALTER TABLE 테이블명 DROP [ COLUMN] 컬럼명;
+- 테이블 이름 변경
+	ALTER TABLE 테이블명 RENAME [TO | AS] 새테이블명;
+
+
+	
