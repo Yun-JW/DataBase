@@ -1,0 +1,55 @@
+4_3_DB(DML_DDL_Object)_DataType.txt
+
+@@@데이터 타입@@@
+
+@MySql의 데이터 타입
+1. 숫자 
+2. 문자
+3. 날짜
+4. 기타
+
+@숫자 데이터 타입
+1. BIT / 1 ~ 64비트 / 범위 내의 정수와 이진 표기의 문자열로 표현(양수만 가능, 비트 연산 가능)
+2. TINYINT / 1바이트 / 정수
+3. SMALLINT / 2바이트 / 정수
+4. MEDIUMINT / 3바이트 / 정수
+5. INT, INTEGER / 4바이트 / 정수
+6. BIGINT / 8바이트 / 정수
+7. FLOAT / 4바이트 / 소수점 아래 15자리까지 표현
+8. DOUBLE, REAL / 8바이트 / 소수점 아래 15자리까지 표현
+9. DECIMAL(p, [s]), NUMBER(p, [s]) / 최대 29바이트 / 고정 소수점 표현(전체 자리수p, 소수이하자리수s)
+
+@문자 데이터 타입 -1
+1. CHAR(n) / 255개 문자 / 고정 길이 문자형(공백 패딩)
+2. VARCHAR(n) / 65535개 문자 / 가변 길이 문자형(실제 사용하는 글자만큼의 공간만 사용), 실제 길이 저장하는 바이트 추가됨
+3. BINARY(n) / 255바이트 / 고정 길이 바이너리 데이터
+4. VARBINARY(n) / 255바이트 / 가변 길이 바이너리 데이터
+
+- TEXT(대량 텍스트 저장 목적, 길이 지정 불가능, 인덱스의 제한적 사용)
+5. TINYTEXT / 255바이트 
+6. TEXT / 64KB
+7. MEDIUMTEXT / 16MB
+8. LONGTEXT / 4GB
+
+- BLOB(바이너리 데이터(이미지, 동영상 등) 저장 목적
+9. TINYBLOB / 255바이트
+10. BLOB / 64KB
+11. MEDIUMBLOB / 16MB
+12. LONGBLOB / 4G 
+
+@문자 데이터 타입-2
+1. ENUM(값1, 값2, ...)
+	최대 65535개의 데이터
+	해당 데이터타입을 갖는 컬럼의 경우 명시된 데이터들 중 하나의 값만 가질 수 있음
+
+2. SET(값1, 값2, ...)
+	최대 64개의 중복되지 않는 데이터
+	해당 데이터타입을 갖는 컬럼의 경우 명시된 데이터들 중 여러 개의 값을 가질 수 있음
+
+@날짜 데이터 타입
+1. DATE / 3Byte / YYYY-MM-DD 형식
+2. TIME / 3Byte / HH:MM:SS 형식으로 사용
+3. DATETIME / 8Byte / YYYY-MM-DD HH:MM:SS 형식으로 사용
+4. TIMESTAMP / 4Byte / YYYY-MM-DD HH:MM:SS 형식으로 사용, time_zone 시스템 변수와 관련이 있으며 UTC 시간대로 변환하여 저장
+5. YEAR / 1Byte / YYYY형식으로 사용
+
